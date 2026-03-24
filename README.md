@@ -65,10 +65,6 @@ cd /opt/Dockovpn && /opt/Dockovpn/genclient.sh n john_doe > john_doe.ovpn
 update `remote` to Mordor Xray address/port:
 `remote Mordor_IP 9443`
 
-### 8. ???
-
-### 9. Profit!
-
 
 # Mordor
 
@@ -83,3 +79,16 @@ update `remote` to Mordor Xray address/port:
 cd Mordor
 docker compose up -d
 ```
+### 4. docker ps
+
+```
+╭───────────────────────────────────────────────────────────────────────────────╮
+│ >                                                                             │
+│   2/2 (0)      ────────────────────────────────────────────────────────────── │
+│ ▌ xray-mordor   (teddysun/xray)   0.0.0.0:9443->1194/tcp, [::]:9443->1194/tcp │
+╰───────────────────────────────────────────────────────────────────────────────╯
+```
+
+### 5. ???
+
+### 6. Profit!

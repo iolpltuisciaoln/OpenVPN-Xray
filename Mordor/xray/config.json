@@ -20,7 +20,7 @@
                 "vnext": [
                     {
                         "address": "---REPLACE WITH DisneyLand IP---",
-                        "port": 7443,
+                        "port": 9443,
                         "users": [
                             {
                                 "id": "---REPLACE WITH `$xray uuid`, CLIENT/SERVER MUST MATCH---",

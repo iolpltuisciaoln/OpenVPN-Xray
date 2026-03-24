@@ -4,7 +4,7 @@ services:
     container_name: xray-mordor
     image: teddysun/xray
     ports:
-      - "9443:1194"
+      - "9443:9443"
     volumes:
       - ./xray:/etc/xray
     # xray-config.json must be at ./xray/config.json

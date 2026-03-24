@@ -1,0 +1,11 @@
+version: '3'
+services:
+  xray:
+    container_name: xray-mordor
+    image: teddysun/xray
+    ports:
+      - "9443:1194"
+    volumes:
+      - ./xray:/etc/xray
+    # xray-config.json must be at ./xray/config.json
+    restart: always

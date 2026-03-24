@@ -1,0 +1,40 @@
+services:
+  ovpn:
+    container_name: openvpn
+    image: alekslitvinenk/openvpn:latest
+    cap_add:
+        - NET_ADMIN
+    ports:
+        - 1194:1194/tcp
+    devices:
+        - /dev/net/tun:/dev/net/tun
+    environment:
+        HOST_ADDR: Mordor-XRay-GW # MORDOR SIDE X-RAY GATEWAY (writes to config)
+        HOST_TUN_PROTOCOL: tcp # BUG - APPLY MANUALLY
+    volumes:
+        - ./openvpn_conf:/opt/Dockovpn_data
+        - ./server.conf:/etc/openvpn/server.conf
+    restart: always
+  xray:
+    container_name: xray-disneyland
+    image: teddysun/xray
+    ports:
+      - "7443:7443"
+    volumes:
+      - ./xray/config.json:/etc/xray/config.json
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        if [ ! -f /etc/xray/cert.pem ] || [ ! -f /etc/xray/key.pem ]; then
+          echo "Generating TLS certificate..."
+          openssl req -new -x509 -days 365 -nodes \
+            -subj "/C=US/ST=California/L=Mountain View/O=Google LLC/CN=www.google.com" \
+            -keyout /etc/xray/key.pem \
+            -out /etc/xray/cert.pem
+          echo "Certificate generated."
+        else
+          echo "Certificate already exists, skipping generation."
+        fi
+        exec xray -config /etc/xray/config.json
+    restart: always

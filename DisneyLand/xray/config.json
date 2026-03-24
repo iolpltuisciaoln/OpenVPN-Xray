@@ -1,0 +1,60 @@
+{
+    "log": {
+        "loglevel": "warning"
+    },
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "settings": {
+                "redirect": "openvpn:1194"
+            },
+            "tag": "openvpn"
+        }
+    ],
+    "inbounds": [
+        {
+            "protocol": "vless",
+            "port": 7443,
+            "settings": {
+                "decryption": "none",
+                "clients": [
+                    {
+                        "id": "---REPLACE WITH `$xray uuid`, CLIENT/SERVER MUST MATCH---",
+                        "flow": "xtls-rprx-vision"
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/xray/cert.pem",
+                            "keyFile": "/etc/xray/key.pem"
+                        }
+                    ],
+                    "serverName": "www.google.com",
+                    "alpn": [
+                        "h2",
+                        "http/1.1"
+                    ],
+                    "fingerprint": "chrome",
+                    "allowInsecure": true
+                }
+            },
+            "tag": "xray-in"
+        }
+    ],
+    "routing": {
+        "rules": [
+            {
+                "type": "field",
+                "inboundTag": [
+                    "xray-in"
+                ],
+                "outboundTag": "openvpn"
+            }
+        ]
+    }
+}

@@ -1,0 +1,49 @@
+{
+    "log": {
+        "loglevel": "warning"
+    },
+    "inbounds": [
+        {
+            "port": 1194,
+            "protocol": "dokodemo-door",
+            "settings": {
+                "address": "openvpn",
+                "port": 1194,
+                "network": "tcp"
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "vless",
+            "settings": {
+                "vnext": [
+                    {
+                        "address": "---REPLACE WITH DisneyLand IP---",
+                        "port": 7443,
+                        "users": [
+                            {
+                                "id": "---REPLACE WITH `$xray uuid`, CLIENT/SERVER MUST MATCH---",
+                                "flow": "xtls-rprx-vision",
+                                "encryption": "none"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "serverName": "www.google.com",
+                    "alpn": [
+                        "h2",
+                        "http/1.1"
+                    ],
+                    "fingerprint": "chrome",
+                    "allowInsecure": true
+                }
+            }
+        }
+    ]
+}
